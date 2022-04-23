@@ -33,6 +33,7 @@ module.exports = (app) => {
 					// For dev server
 					"style-src 'self' 'unsafe-inline'",
 
+					"img-src 'self' data:",
 					"frame-ancestors 'none'",
 					"base-uri 'none'",
 					"object-src 'none'",

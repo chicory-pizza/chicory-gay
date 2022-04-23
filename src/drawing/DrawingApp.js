@@ -1,12 +1,21 @@
 // @flow strict
 
-import {useCallback, useState} from 'react';
+import {useCallback, useEffect, useRef, useState} from 'react';
 
-import styles from './DrawingApp.module.css';
+import drawStampImg from './draw_stamp.png';
+import MouseStampCanvas from './MouseStampCanvas';
 
 export default function DrawingApp(): React$Node {
 	const [mouseMoveCoordinates, setMouseMoveCoordinates] =
 		useState<?[number, number]>(null);
+	const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+	const [windowHeight, setWindowHeight] = useState(window.innerHeight);
+
+	const imageRef = useRef<HTMLImageElement>(new Image());
+
+	useEffect(() => {
+		imageRef.current.src = drawStampImg;
+	}, []);
 
 	const onMouseMove = useCallback(
 		(ev: SyntheticMouseEvent<HTMLDivElement>) => {
@@ -27,17 +36,40 @@ export default function DrawingApp(): React$Node {
 		[setMouseMoveCoordinates]
 	);
 
+	function onWindowResize() {
+		setWindowWidth(window.innerWidth);
+		setWindowHeight(window.innerHeight);
+	}
+
+	useEffect(() => {
+		window.addEventListener('resize', onWindowResize);
+
+		return () => {
+			window.removeEventListener('resize', onWindowResize);
+		};
+	});
+
+	const dpr = window.devicePixelRatio || 1;
+
 	return (
 		<div
-			className={styles.fullscreen}
+			className="fullscreen absolute"
 			onMouseMove={onMouseMove}
 			onMouseLeave={onMouseLeave}
 		>
-			{mouseMoveCoordinates != null ? (
+			{/* {mouseMoveCoordinates != null ? (
 				<>
 					{mouseMoveCoordinates[0]}, {mouseMoveCoordinates[1]}
 				</>
-			) : null}
+			) : null} */}
+
+			<MouseStampCanvas
+				dpr={dpr}
+				drawStampImg={imageRef.current}
+				mouseMoveCoordinates={mouseMoveCoordinates}
+				windowHeight={windowHeight}
+				windowWidth={windowWidth}
+			/>
 		</div>
 	);
 }
