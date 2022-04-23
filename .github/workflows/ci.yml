@@ -26,4 +26,13 @@ jobs:
 
       - run: npm ci
 
+      # smoke test to ensure the build works
+      - run: npm run build
+
+      - run: npm test
+
+      - run: npm run lint
+
+      - run: npm run flow
+
       - run: npm run prettier -- -l

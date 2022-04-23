@@ -1,0 +1,33 @@
+{
+	"extends": [
+		"eslint:recommended",
+		"react-app",
+		"react-app/jest",
+
+		"plugin:react/recommended",
+		"plugin:react/jsx-runtime",
+		"plugin:jsx-a11y/recommended"
+	],
+	"rules": {
+		// Prettier already handles this
+		"no-mixed-spaces-and-tabs": "off",
+
+		"flowtype/newline-after-flow-annotation": "error",
+		"flowtype/require-indexer-name": "error",
+		"flowtype/require-readonly-react-props": "error",
+
+		"react/button-has-type": "error",
+		"react/prop-types": "off",
+
+		"import/order": [
+			"warn",
+			{
+				"newlines-between": "always",
+				"alphabetize": {
+					"order": "asc",
+					"caseInsensitive": true
+				}
+			}
+		]
+	}
+}
