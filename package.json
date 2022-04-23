@@ -1,0 +1,23 @@
+{
+  "name": "chicory-gay",
+  "description": "Website for https://chicory.gay",
+  "bugs": {
+    "email": "ngyikp@gmail.com"
+  },
+  "author": {
+    "name": "Ng Yik Phang (ngyikp)",
+    "email": "ngyikp@gmail.com",
+    "url": "https://ngyikp.com"
+  },
+  "private": true,
+  "license": "MPL-2.0",
+  "engines": {
+    "node": ">=16"
+  },
+  "scripts": {
+    "prettier": "prettier ."
+  },
+  "devDependencies": {
+    "prettier": "2.6.2"
+  }
+}
