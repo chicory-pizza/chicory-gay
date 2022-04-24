@@ -8,6 +8,7 @@ type Props = $ReadOnly<{
 	dpr: number,
 	drawStampCanvasImageData: ?ImageData,
 	mouseMoveCoordinates: ?[number, number],
+	stampColor: string,
 	windowHeight: number,
 	windowWidth: number,
 }>;
@@ -46,14 +47,19 @@ export default function MouseStampCanvas(props: Props): React$Node {
 						continue;
 					}
 
-					ctx.fillStyle = '#fff';
+					ctx.fillStyle = props.stampColor;
 					ctx.fillRect(mouseX - offsetX + x, mouseY - offsetY + y, 1, 1);
 				}
 			}
 		}
 
 		ctx.setTransform(1, 0, 0, 1, 0, 0);
-	}, [props.mouseMoveCoordinates, props.dpr, props.drawStampCanvasImageData]);
+	}, [
+		props.dpr,
+		props.drawStampCanvasImageData,
+		props.mouseMoveCoordinates,
+		props.stampColor,
+	]);
 
 	return (
 		<canvas

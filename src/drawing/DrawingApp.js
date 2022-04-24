@@ -3,6 +3,7 @@
 import {useCallback, useEffect, useState} from 'react';
 
 import MouseStampCanvas from './MouseStampCanvas';
+import Toolbar from './Toolbar';
 import useDrawStampImage from './useDrawStampImage';
 
 export default function DrawingApp(): React$Node {
@@ -13,6 +14,9 @@ export default function DrawingApp(): React$Node {
 
 	const drawStampCanvasImageData = useDrawStampImage();
 
+	const [stampColor, setStampColor] = useState('#333333');
+
+	// Mouse movement
 	const onMouseMove = useCallback(
 		(ev: SyntheticMouseEvent<HTMLDivElement>) => {
 			const rect = ev.currentTarget.getBoundingClientRect();
@@ -32,6 +36,7 @@ export default function DrawingApp(): React$Node {
 		[setMouseMoveCoordinates]
 	);
 
+	// Canvas resize
 	function onWindowResize() {
 		setWindowWidth(window.innerWidth);
 		setWindowHeight(window.innerHeight);
@@ -53,16 +58,13 @@ export default function DrawingApp(): React$Node {
 			onMouseMove={onMouseMove}
 			onMouseLeave={onMouseLeave}
 		>
-			{/* {mouseMoveCoordinates != null ? (
-				<>
-					{mouseMoveCoordinates[0]}, {mouseMoveCoordinates[1]}
-				</>
-			) : null} */}
+			<Toolbar color={stampColor} onColorChange={setStampColor} />
 
 			<MouseStampCanvas
 				dpr={dpr}
 				drawStampCanvasImageData={drawStampCanvasImageData}
 				mouseMoveCoordinates={mouseMoveCoordinates}
+				stampColor={stampColor}
 				windowHeight={windowHeight}
 				windowWidth={windowWidth}
 			/>
