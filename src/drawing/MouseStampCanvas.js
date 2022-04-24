@@ -6,7 +6,7 @@ import getCanvasRenderingContext from '../util/getCanvasRenderingContext';
 
 type Props = $ReadOnly<{
 	dpr: number,
-	drawStampImg: HTMLImageElement,
+	drawStampCanvasImageData: ?ImageData,
 	mouseMoveCoordinates: ?[number, number],
 	windowHeight: number,
 	windowWidth: number,
@@ -25,16 +25,35 @@ export default function MouseStampCanvas(props: Props): React$Node {
 		ctx.scale(props.dpr, props.dpr);
 
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
-		if (props.mouseMoveCoordinates) {
-			ctx.drawImage(
-				props.drawStampImg,
-				props.mouseMoveCoordinates[0] - props.drawStampImg.width / 2,
-				props.mouseMoveCoordinates[1] - props.drawStampImg.height / 2
-			);
+		if (props.mouseMoveCoordinates && props.drawStampCanvasImageData) {
+			const [mouseX, mouseY] = props.mouseMoveCoordinates;
+			const {data, width, height} = props.drawStampCanvasImageData;
+
+			const offsetX = Math.floor(width / 2);
+			const offsetY = Math.floor(height / 2);
+
+			for (let y = 0; y < height; y += 1) {
+				for (let x = 0; x < width; x += 1) {
+					const dataPosition = (y * width + x) * 4;
+
+					// white only
+					if (
+						data[dataPosition] !== 255 &&
+						data[dataPosition + 1] !== 255 &&
+						data[dataPosition + 2] !== 255 &&
+						data[dataPosition + 3] !== 255
+					) {
+						continue;
+					}
+
+					ctx.fillStyle = '#fff';
+					ctx.fillRect(mouseX - offsetX + x, mouseY - offsetY + y, 1, 1);
+				}
+			}
 		}
 
 		ctx.setTransform(1, 0, 0, 1, 0, 0);
-	}, [props.mouseMoveCoordinates, props.dpr, props.drawStampImg]);
+	}, [props.mouseMoveCoordinates, props.dpr, props.drawStampCanvasImageData]);
 
 	return (
 		<canvas

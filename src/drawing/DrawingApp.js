@@ -1,9 +1,9 @@
 // @flow strict
 
-import {useCallback, useEffect, useRef, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 
-import drawStampImg from './draw_stamp.png';
 import MouseStampCanvas from './MouseStampCanvas';
+import useDrawStampImage from './useDrawStampImage';
 
 export default function DrawingApp(): React$Node {
 	const [mouseMoveCoordinates, setMouseMoveCoordinates] =
@@ -11,11 +11,7 @@ export default function DrawingApp(): React$Node {
 	const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 	const [windowHeight, setWindowHeight] = useState(window.innerHeight);
 
-	const imageRef = useRef<HTMLImageElement>(new Image());
-
-	useEffect(() => {
-		imageRef.current.src = drawStampImg;
-	}, []);
+	const drawStampCanvasImageData = useDrawStampImage();
 
 	const onMouseMove = useCallback(
 		(ev: SyntheticMouseEvent<HTMLDivElement>) => {
@@ -65,7 +61,7 @@ export default function DrawingApp(): React$Node {
 
 			<MouseStampCanvas
 				dpr={dpr}
-				drawStampImg={imageRef.current}
+				drawStampCanvasImageData={drawStampCanvasImageData}
 				mouseMoveCoordinates={mouseMoveCoordinates}
 				windowHeight={windowHeight}
 				windowWidth={windowWidth}
