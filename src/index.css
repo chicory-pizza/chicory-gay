@@ -18,10 +18,14 @@ body {
 	background: #fffd88;
 	color: #000;
 	cursor: default;
-	font-family: Domigorgon, sans-serif;
-	font-size: 1em;
 	text-align: left;
 	user-select: none;
+}
+
+body,
+button {
+	font-family: Domigorgon, sans-serif;
+	font-size: 1em;
 }
 
 a {
@@ -32,9 +36,29 @@ a {
 	outline: 1px solid rgb(182, 154, 255);
 }
 
+button,
 input[type='color'],
 input[type='range'] {
 	cursor: pointer;
+}
+
+button {
+	border: 1px solid #999;
+
+	background: #eee;
+	color: #000;
+	font-size: 1em;
+	padding: 2px 8px;
+}
+
+button:hover,
+button:focus {
+	border-color: #333;
+}
+
+button[disabled] {
+	cursor: not-allowed;
+	opacity: 0.2;
 }
 
 html,

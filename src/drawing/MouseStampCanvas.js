@@ -9,6 +9,7 @@ import drawStampToCanvas from './drawStampToCanvas';
 type Props = $ReadOnly<{
 	dpr: number,
 	mouseMoveCoordinates: ?[number, number],
+	onPointerDown: (ev: SyntheticMouseEvent<HTMLCanvasElement>) => mixed,
 	stampCanvasImageData: ?ImageData,
 	stampColor: string,
 	stampSize: number,
@@ -59,6 +60,7 @@ export default function MouseStampCanvas(props: Props): React$Node {
 				width: props.windowWidth,
 				height: props.windowHeight,
 			}}
+			onPointerDown={props.onPointerDown}
 		/>
 	);
 }

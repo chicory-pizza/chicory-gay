@@ -5,6 +5,9 @@ import DrawingApp from './DrawingApp';
 test('renders', () => {
 	render(<DrawingApp />);
 
-	const linkElement = screen.getByText(/Hello world/i);
-	expect(linkElement).toBeInTheDocument();
+	const colorLabel = screen.getByText(/Color:/);
+	expect(colorLabel).toBeInTheDocument();
+
+	const sizeLabel = screen.getByText(/Size:/);
+	expect(sizeLabel).toBeInTheDocument();
 });

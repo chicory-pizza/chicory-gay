@@ -2,11 +2,33 @@
 
 import {useCallback, useEffect, useState} from 'react';
 
+import useUndoRedoReducer from '../util/useUndoRedoReducer';
+import type {UndoReducerAction} from '../util/useUndoRedoReducer';
+
 import MouseStampCanvas from './MouseStampCanvas';
 import SavedStampCanvas from './SavedStampCanvas';
 import type {StampType} from './StampType';
 import Toolbar from './Toolbar';
 import useDrawStampImage from './useDrawStampImage';
+
+type ReducerState = $ReadOnly<{
+	stamps: $ReadOnlyArray<StampType>,
+}>;
+
+type ReducerAction = UndoReducerAction | {type: 'newStamp', stamp: StampType};
+
+function reducer(state: ReducerState, action: ReducerAction): ReducerState {
+	switch (action.type) {
+		case 'newStamp':
+			return {
+				...state,
+				stamps: state.stamps.concat(action.stamp),
+			};
+
+		default:
+			throw new Error('Unknown reducer action ' + action.type);
+	}
+}
 
 export default function DrawingApp(): React$Node {
 	const [mouseMoveCoordinates, setMouseMoveCoordinates] =
@@ -16,9 +38,13 @@ export default function DrawingApp(): React$Node {
 
 	const stampCanvasImageData = useDrawStampImage();
 
-	const [stamps, setStamps] = useState<Array<StampType>>([]);
 	const [stampColor, setStampColor] = useState('#333333');
 	const [stampSize, setStampSize] = useState(10);
+
+	const {currentState, dispatch, canUndo, canRedo} = useUndoRedoReducer(
+		reducer,
+		{stamps: []}
+	);
 
 	// Mouse movement
 	const onMouseMove = useCallback(
@@ -57,34 +83,32 @@ export default function DrawingApp(): React$Node {
 	const dpr = window.devicePixelRatio || 1;
 
 	// Stamping
-	const onPointerDown = useCallback(
-		(ev: SyntheticMouseEvent<HTMLDivElement>) => {
-			if (!mouseMoveCoordinates) {
-				return;
-			}
+	function onPointerDown(ev: SyntheticMouseEvent<HTMLCanvasElement>) {
+		if (!mouseMoveCoordinates) {
+			return;
+		}
 
-			setStamps([
-				...stamps,
-				{
-					color: stampColor,
-					size: stampSize,
-					x: mouseMoveCoordinates[0],
-					y: mouseMoveCoordinates[1],
-				},
-			]);
-		},
-		[mouseMoveCoordinates, stampColor, stampSize, stamps]
-	);
+		dispatch({
+			type: 'newStamp',
+			stamp: {
+				color: stampColor,
+				size: stampSize,
+				x: mouseMoveCoordinates[0],
+				y: mouseMoveCoordinates[1],
+			},
+		});
+	}
 
 	return (
-		// eslint-disable-next-line jsx-a11y/no-static-element-interactions
 		<div
 			className="fullscreen absolute"
 			onMouseMove={onMouseMove}
 			onMouseLeave={onMouseLeave}
-			onPointerDown={onPointerDown}
 		>
 			<Toolbar
+				canRedo={canRedo}
+				canUndo={canUndo}
+				dispatch={dispatch}
 				color={stampColor}
 				onColorChange={setStampColor}
 				onSizeChange={setStampSize}
@@ -93,7 +117,7 @@ export default function DrawingApp(): React$Node {
 
 			<SavedStampCanvas
 				dpr={dpr}
-				stamps={stamps}
+				stamps={currentState.stamps}
 				stampCanvasImageData={stampCanvasImageData}
 				windowHeight={windowHeight}
 				windowWidth={windowWidth}
@@ -101,6 +125,7 @@ export default function DrawingApp(): React$Node {
 
 			<MouseStampCanvas
 				dpr={dpr}
+				onPointerDown={onPointerDown}
 				mouseMoveCoordinates={mouseMoveCoordinates}
 				stampCanvasImageData={stampCanvasImageData}
 				stampColor={stampColor}
