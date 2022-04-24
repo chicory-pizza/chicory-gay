@@ -2,9 +2,11 @@
 	position: fixed;
 	top: 0;
 	left: 0;
+	z-index: 12;
 
+	background: rgb(255, 253, 136, 0.8);
 	display: flex;
-	padding: 8px 0 0 8px;
+	padding: 8px 0 8px 8px;
 }
 
 .toolbar label {

@@ -5,18 +5,17 @@ import {useEffect, useRef} from 'react';
 import getCanvasRenderingContext from '../util/getCanvasRenderingContext';
 
 import drawStampToCanvas from './drawStampToCanvas';
+import type {StampType} from './StampType';
 
 type Props = $ReadOnly<{
 	dpr: number,
-	mouseMoveCoordinates: ?[number, number],
+	stamps: $ReadOnlyArray<StampType>,
 	stampCanvasImageData: ?ImageData,
-	stampColor: string,
-	stampSize: number,
 	windowHeight: number,
 	windowWidth: number,
 }>;
 
-export default function MouseStampCanvas(props: Props): React$Node {
+export default function SavedStampCanvas(props: Props): React$Node {
 	const canvasRef = useRef<?HTMLCanvasElement>(null);
 
 	useEffect(() => {
@@ -29,24 +28,26 @@ export default function MouseStampCanvas(props: Props): React$Node {
 		ctx.scale(props.dpr, props.dpr);
 
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
-		if (props.mouseMoveCoordinates && props.stampCanvasImageData) {
-			drawStampToCanvas(
-				ctx,
-				props.stampCanvasImageData,
-				props.mouseMoveCoordinates[0],
-				props.mouseMoveCoordinates[1],
-				props.stampSize,
-				props.stampColor
-			);
+		if (props.stampCanvasImageData && props.stamps.length) {
+			for (let i = 0; i < props.stamps.length; i += 1) {
+				drawStampToCanvas(
+					ctx,
+					props.stampCanvasImageData,
+					props.stamps[i].x,
+					props.stamps[i].y,
+					props.stamps[i].size,
+					props.stamps[i].color
+				);
+			}
 		}
 
 		ctx.setTransform(1, 0, 0, 1, 0, 0);
 	}, [
 		props.dpr,
 		props.stampCanvasImageData,
-		props.mouseMoveCoordinates,
-		props.stampColor,
-		props.stampSize,
+		props.windowWidth,
+		props.windowHeight,
+		props.stamps,
 	]);
 
 	return (

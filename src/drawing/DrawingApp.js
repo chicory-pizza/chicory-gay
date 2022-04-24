@@ -3,6 +3,8 @@
 import {useCallback, useEffect, useState} from 'react';
 
 import MouseStampCanvas from './MouseStampCanvas';
+import SavedStampCanvas from './SavedStampCanvas';
+import type {StampType} from './StampType';
 import Toolbar from './Toolbar';
 import useDrawStampImage from './useDrawStampImage';
 
@@ -12,8 +14,9 @@ export default function DrawingApp(): React$Node {
 	const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 	const [windowHeight, setWindowHeight] = useState(window.innerHeight);
 
-	const drawStampCanvasImageData = useDrawStampImage();
+	const stampCanvasImageData = useDrawStampImage();
 
+	const [stamps, setStamps] = useState<Array<StampType>>([]);
 	const [stampColor, setStampColor] = useState('#333333');
 	const [stampSize, setStampSize] = useState(10);
 
@@ -31,7 +34,7 @@ export default function DrawingApp(): React$Node {
 	);
 
 	const onMouseLeave = useCallback(
-		(ev: SyntheticMouseEvent<>) => {
+		(ev: SyntheticMouseEvent<HTMLDivElement>) => {
 			setMouseMoveCoordinates(null);
 		},
 		[setMouseMoveCoordinates]
@@ -53,11 +56,33 @@ export default function DrawingApp(): React$Node {
 
 	const dpr = window.devicePixelRatio || 1;
 
+	// Stamping
+	const onPointerDown = useCallback(
+		(ev: SyntheticMouseEvent<HTMLDivElement>) => {
+			if (!mouseMoveCoordinates) {
+				return;
+			}
+
+			setStamps([
+				...stamps,
+				{
+					color: stampColor,
+					size: stampSize,
+					x: mouseMoveCoordinates[0],
+					y: mouseMoveCoordinates[1],
+				},
+			]);
+		},
+		[mouseMoveCoordinates, stampColor, stampSize, stamps]
+	);
+
 	return (
+		// eslint-disable-next-line jsx-a11y/no-static-element-interactions
 		<div
 			className="fullscreen absolute"
 			onMouseMove={onMouseMove}
 			onMouseLeave={onMouseLeave}
+			onPointerDown={onPointerDown}
 		>
 			<Toolbar
 				color={stampColor}
@@ -66,10 +91,18 @@ export default function DrawingApp(): React$Node {
 				size={stampSize}
 			/>
 
+			<SavedStampCanvas
+				dpr={dpr}
+				stamps={stamps}
+				stampCanvasImageData={stampCanvasImageData}
+				windowHeight={windowHeight}
+				windowWidth={windowWidth}
+			/>
+
 			<MouseStampCanvas
 				dpr={dpr}
-				drawStampCanvasImageData={drawStampCanvasImageData}
 				mouseMoveCoordinates={mouseMoveCoordinates}
+				stampCanvasImageData={stampCanvasImageData}
 				stampColor={stampColor}
 				stampSize={stampSize}
 				windowHeight={windowHeight}
