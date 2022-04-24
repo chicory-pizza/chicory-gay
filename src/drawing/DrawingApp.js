@@ -15,6 +15,7 @@ export default function DrawingApp(): React$Node {
 	const drawStampCanvasImageData = useDrawStampImage();
 
 	const [stampColor, setStampColor] = useState('#333333');
+	const [stampSize, setStampSize] = useState(10);
 
 	// Mouse movement
 	const onMouseMove = useCallback(
@@ -58,13 +59,19 @@ export default function DrawingApp(): React$Node {
 			onMouseMove={onMouseMove}
 			onMouseLeave={onMouseLeave}
 		>
-			<Toolbar color={stampColor} onColorChange={setStampColor} />
+			<Toolbar
+				color={stampColor}
+				onColorChange={setStampColor}
+				onSizeChange={setStampSize}
+				size={stampSize}
+			/>
 
 			<MouseStampCanvas
 				dpr={dpr}
 				drawStampCanvasImageData={drawStampCanvasImageData}
 				mouseMoveCoordinates={mouseMoveCoordinates}
 				stampColor={stampColor}
+				stampSize={stampSize}
 				windowHeight={windowHeight}
 				windowWidth={windowWidth}
 			/>

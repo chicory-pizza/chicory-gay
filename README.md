@@ -23,3 +23,5 @@ This project was bootstrapped with [Create React App](https://create-react-app.d
 The web app is licensed under the [MPL 2.0 License](https://www.mozilla.org/en-US/MPL/2.0/).
 
 Original image by [kez](https://azurehaiku.tumblr.com/post/681788441393037312/i-want-what-they-have).
+
+Brush stamp by [moonberrytea](https://moonberrytea.tumblr.com)

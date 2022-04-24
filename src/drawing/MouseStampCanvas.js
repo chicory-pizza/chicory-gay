@@ -9,6 +9,7 @@ type Props = $ReadOnly<{
 	drawStampCanvasImageData: ?ImageData,
 	mouseMoveCoordinates: ?[number, number],
 	stampColor: string,
+	stampSize: number,
 	windowHeight: number,
 	windowWidth: number,
 }>;
@@ -30,8 +31,8 @@ export default function MouseStampCanvas(props: Props): React$Node {
 			const [mouseX, mouseY] = props.mouseMoveCoordinates;
 			const {data, width, height} = props.drawStampCanvasImageData;
 
-			const offsetX = Math.floor(width / 2);
-			const offsetY = Math.floor(height / 2);
+			const offsetX = Math.floor((width / 2) * props.stampSize);
+			const offsetY = Math.floor((height / 2) * props.stampSize);
 
 			for (let y = 0; y < height; y += 1) {
 				for (let x = 0; x < width; x += 1) {
@@ -48,7 +49,12 @@ export default function MouseStampCanvas(props: Props): React$Node {
 					}
 
 					ctx.fillStyle = props.stampColor;
-					ctx.fillRect(mouseX - offsetX + x, mouseY - offsetY + y, 1, 1);
+					ctx.fillRect(
+						mouseX - offsetX + x * props.stampSize,
+						mouseY - offsetY + y * props.stampSize,
+						props.stampSize,
+						props.stampSize
+					);
 				}
 			}
 		}
@@ -59,6 +65,7 @@ export default function MouseStampCanvas(props: Props): React$Node {
 		props.drawStampCanvasImageData,
 		props.mouseMoveCoordinates,
 		props.stampColor,
+		props.stampSize,
 	]);
 
 	return (
