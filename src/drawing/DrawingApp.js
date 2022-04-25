@@ -38,6 +38,7 @@ export default function DrawingApp(): React$Node {
 
 	const stampCanvasImageData = useDrawStampImage();
 
+	const [drawingActive, setDrawingActive] = useState(false);
 	const [stampColor, setStampColor] = useState('#333333');
 	const [stampSize, setStampSize] = useState(10);
 
@@ -88,6 +89,8 @@ export default function DrawingApp(): React$Node {
 			return;
 		}
 
+		setDrawingActive(true);
+
 		dispatch({
 			type: 'newStamp',
 			stamp: {
@@ -112,6 +115,7 @@ export default function DrawingApp(): React$Node {
 				color={stampColor}
 				onColorChange={setStampColor}
 				onSizeChange={setStampSize}
+				showControls={drawingActive}
 				size={stampSize}
 			/>
 
@@ -125,8 +129,9 @@ export default function DrawingApp(): React$Node {
 
 			<MouseStampCanvas
 				dpr={dpr}
-				onPointerDown={onPointerDown}
 				mouseMoveCoordinates={mouseMoveCoordinates}
+				onPointerDown={onPointerDown}
+				showPreview={drawingActive}
 				stampCanvasImageData={stampCanvasImageData}
 				stampColor={stampColor}
 				stampSize={stampSize}

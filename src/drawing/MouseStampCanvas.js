@@ -10,6 +10,7 @@ type Props = $ReadOnly<{
 	dpr: number,
 	mouseMoveCoordinates: ?[number, number],
 	onPointerDown: (ev: SyntheticMouseEvent<HTMLCanvasElement>) => mixed,
+	showPreview: boolean,
 	stampCanvasImageData: ?ImageData,
 	stampColor: string,
 	stampSize: number,
@@ -30,7 +31,11 @@ export default function MouseStampCanvas(props: Props): React$Node {
 		ctx.scale(props.dpr, props.dpr);
 
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
-		if (props.mouseMoveCoordinates && props.stampCanvasImageData) {
+		if (
+			props.showPreview &&
+			props.mouseMoveCoordinates &&
+			props.stampCanvasImageData
+		) {
 			drawStampToCanvas(
 				ctx,
 				props.stampCanvasImageData,
@@ -46,6 +51,7 @@ export default function MouseStampCanvas(props: Props): React$Node {
 		props.dpr,
 		props.stampCanvasImageData,
 		props.mouseMoveCoordinates,
+		props.showPreview,
 		props.stampColor,
 		props.stampSize,
 	]);

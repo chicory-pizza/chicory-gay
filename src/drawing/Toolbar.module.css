@@ -7,6 +7,13 @@
 	background: rgb(255, 253, 136, 0.8);
 	display: flex;
 	padding: 8px;
+
+	transition: opacity 1s ease;
+	opacity: 1;
+}
+
+.toolbarInactive {
+	opacity: 0;
 }
 
 .toolbar label {

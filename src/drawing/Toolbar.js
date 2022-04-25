@@ -11,12 +11,19 @@ type Props = $ReadOnly<{
 	dispatch: (action: UndoReducerAction) => void,
 	onColorChange: (newColor: string) => mixed,
 	onSizeChange: (newSize: number) => mixed,
+	showControls: boolean,
 	size: number,
 }>;
 
 export default function Toolbar(props: Props): React$Node {
 	return (
-		<div className={styles.toolbar}>
+		<div
+			className={
+				styles.toolbar +
+				' ' +
+				(!props.showControls ? styles.toolbarInactive : '')
+			}
+		>
 			<label className={styles.space}>
 				Color:&nbsp;
 				<input
