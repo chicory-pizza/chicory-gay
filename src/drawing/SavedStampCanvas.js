@@ -33,8 +33,8 @@ export default function SavedStampCanvas(props: Props): React$Node {
 				drawStampToCanvas(
 					ctx,
 					props.stampCanvasImageData,
-					props.stamps[i].x,
-					props.stamps[i].y,
+					props.stamps[i].centerOffsetX + props.windowWidth / 2,
+					props.stamps[i].centerOffsetY + props.windowHeight / 2,
 					props.stamps[i].size,
 					props.stamps[i].color
 				);

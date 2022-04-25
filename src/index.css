@@ -20,6 +20,7 @@ body {
 	cursor: default;
 	text-align: left;
 	user-select: none;
+	overscroll-behavior: none;
 }
 
 body,

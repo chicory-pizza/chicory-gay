@@ -94,10 +94,10 @@ export default function DrawingApp(): React$Node {
 		dispatch({
 			type: 'newStamp',
 			stamp: {
+				centerOffsetX: mouseMoveCoordinates[0] - windowWidth / 2,
+				centerOffsetY: mouseMoveCoordinates[1] - windowHeight / 2,
 				color: stampColor,
 				size: stampSize,
-				x: mouseMoveCoordinates[0],
-				y: mouseMoveCoordinates[1],
 			},
 		});
 	}
