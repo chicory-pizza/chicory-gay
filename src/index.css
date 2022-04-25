@@ -89,11 +89,18 @@ body {
 	opacity: 1;
 }
 
+.discordIcon,
 .githubIcon {
 	width: 20px;
 	height: 20px;
 	display: block;
 	fill: #171515;
+}
+
+.websiteLink:hover .discordIcon,
+.websiteLink:active .discordIcon,
+.websiteLink:focus .discordIcon {
+	fill: #5865f2;
 }
 
 .fullscreen {
