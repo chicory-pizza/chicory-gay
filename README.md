@@ -1,6 +1,8 @@
 # chicory.gay
 
-Website for https://chicory.gay
+Website for [https://chicory.gay](https://chicory.gay)
+
+<img alt='Chicory and Pizza: "I want to be able to be there for you, when you need it."' src="./public/main.png" width="1280" height="1280" />
 
 ## Development
 
@@ -24,4 +26,4 @@ The web app is licensed under the [MPL 2.0 License](https://www.mozilla.org/en-U
 
 Original image by [kez](https://azurehaiku.tumblr.com/post/681788441393037312/i-want-what-they-have).
 
-Brush stamp by [moonberrytea](https://moonberrytea.tumblr.com)
+Brush stamp by [moonberrytea](https://moonberrytea.tumblr.com).
