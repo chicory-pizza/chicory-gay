@@ -67,6 +67,18 @@ export default function DrawingApp(): React$Node {
 		[setMouseMoveCoordinates]
 	);
 
+	const onWheel = useCallback(
+		(ev: SyntheticWheelEvent<HTMLDivElement>) => {
+			let newColor = '';
+			for (let i = 1; i <= 6; i += 1) {
+				newColor += (~~(Math.random() * 16)).toString(16);
+			}
+
+			setStampColor('#' + newColor);
+		},
+		[setStampColor]
+	);
+
 	// Canvas resize
 	function onWindowResize() {
 		setWindowWidth(window.innerWidth);
@@ -107,6 +119,7 @@ export default function DrawingApp(): React$Node {
 			className="fullscreen absolute"
 			onMouseMove={onMouseMove}
 			onMouseLeave={onMouseLeave}
+			onWheel={onWheel}
 		>
 			<Toolbar
 				canRedo={canRedo}
