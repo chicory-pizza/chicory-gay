@@ -20,7 +20,10 @@ body {
 	cursor: default;
 	text-align: left;
 	user-select: none;
-	overscroll-behavior: none;
+
+	/* disable drag-to-refresh on mobile */
+	overscroll-behavior: none; /* Chrome */
+	touch-action: none; /* Safari */
 }
 
 body,
@@ -75,7 +78,21 @@ body {
 
 	background: rgb(255, 253, 136, 0.8);
 	display: flex;
+
 	padding: 8px;
+	padding-right: calc(env(safe-area-inset-right) + 8px);
+	padding-top: calc(env(safe-area-inset-top) + 8px);
+}
+
+@media screen and (max-width: 600px) {
+	#misc {
+		top: auto;
+		bottom: 0;
+
+		padding: 8px;
+		padding-right: calc(env(safe-area-inset-right) + 8px);
+		padding-bottom: calc(env(safe-area-inset-bottom) + 8px);
+	}
 }
 
 .websiteLink {
