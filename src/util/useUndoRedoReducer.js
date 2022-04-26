@@ -46,11 +46,21 @@ function handleUndoReducer<T, ReducerAction: {...}>(
 ) => UndoState<T> {
 	return function (state, action) {
 		if (action.type === 'undo') {
+			const canUndo = state.currentIndex > 0;
+			if (!canUndo) {
+				return state;
+			}
+
 			return {
 				...state,
 				currentIndex: state.currentIndex - 1,
 			};
 		} else if (action.type === 'redo') {
+			const canRedo = state.currentIndex < state.history.length - 1;
+			if (!canRedo) {
+				return state;
+			}
+
 			return {
 				...state,
 				currentIndex: state.currentIndex + 1,

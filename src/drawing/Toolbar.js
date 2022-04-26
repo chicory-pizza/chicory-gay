@@ -16,6 +16,24 @@ type Props = $ReadOnly<{
 }>;
 
 export default function Toolbar(props: Props): React$Node {
+	function undo(
+		ev:
+			| SyntheticMouseEvent<HTMLButtonElement>
+			| SyntheticTouchEvent<HTMLButtonElement>
+	) {
+		ev.preventDefault();
+		props.dispatch({type: 'undo'});
+	}
+
+	function redo(
+		ev:
+			| SyntheticMouseEvent<HTMLButtonElement>
+			| SyntheticTouchEvent<HTMLButtonElement>
+	) {
+		ev.preventDefault();
+		props.dispatch({type: 'redo'});
+	}
+
 	return (
 		<div
 			className={
@@ -53,19 +71,17 @@ export default function Toolbar(props: Props): React$Node {
 				className={styles.space}
 				disabled={!props.canUndo}
 				type="button"
-				onClick={() => {
-					props.dispatch({type: 'undo'});
-				}}
+				onClick={undo}
+				onTouchEnd={undo}
 			>
 				Undo
 			</button>
 
 			<button
 				disabled={!props.canRedo}
-				onClick={() => {
-					props.dispatch({type: 'redo'});
-				}}
 				type="button"
+				onClick={redo}
+				onTouchEnd={redo}
 			>
 				Redo
 			</button>

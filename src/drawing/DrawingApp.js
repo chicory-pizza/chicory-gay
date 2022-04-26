@@ -47,7 +47,8 @@ export default function DrawingApp(): React$Node {
 		{stamps: []}
 	);
 
-	// Mouse movement
+	// Mouse movement for stamp preview
+	// We don't want this for touch though
 	const onMouseMove = useCallback(
 		(ev: SyntheticMouseEvent<HTMLDivElement>) => {
 			const rect = ev.currentTarget.getBoundingClientRect();
@@ -67,6 +68,7 @@ export default function DrawingApp(): React$Node {
 		[setMouseMoveCoordinates]
 	);
 
+	// Color change
 	const onWheel = useCallback(
 		(ev: SyntheticWheelEvent<HTMLDivElement>) => {
 			let newColor = '';
@@ -96,22 +98,26 @@ export default function DrawingApp(): React$Node {
 	const dpr = window.devicePixelRatio || 1;
 
 	// Stamping
-	function onPointerDown(ev: SyntheticMouseEvent<HTMLCanvasElement>) {
-		if (!mouseMoveCoordinates) {
-			return;
-		}
+	function onPointerDown(ev: SyntheticPointerEvent<HTMLCanvasElement>) {
+		// Always get the current pointer position
+		const rect = ev.currentTarget.getBoundingClientRect();
+
+		const x = parseInt(ev.clientX - rect.left, 10);
+		const y = parseInt(ev.clientY - rect.top, 10);
 
 		setDrawingActive(true);
 
 		dispatch({
 			type: 'newStamp',
 			stamp: {
-				centerOffsetX: mouseMoveCoordinates[0] - windowWidth / 2,
-				centerOffsetY: mouseMoveCoordinates[1] - windowHeight / 2,
+				centerOffsetX: x - windowWidth / 2,
+				centerOffsetY: y - windowHeight / 2,
 				color: stampColor,
 				size: stampSize,
 			},
 		});
+
+		setMouseMoveCoordinates(null);
 	}
 
 	return (
