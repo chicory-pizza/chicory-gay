@@ -1,5 +1,7 @@
 // @flow strict
 
+// $FlowFixMe[untyped-import]
+import {useThrottleCallback} from '@react-hook/throttle';
 import {useCallback, useEffect, useState} from 'react';
 
 import useUndoRedoReducer from '../util/useUndoRedoReducer';
@@ -7,6 +9,8 @@ import type {UndoReducerAction} from '../util/useUndoRedoReducer';
 
 import MouseStampCanvas from './MouseStampCanvas';
 import SavedStampCanvas from './SavedStampCanvas';
+import useColorChangeSound from './sounds/useColorChangeSound';
+import useStampSound from './sounds/useStampSound';
 import type {StampType} from './StampType';
 import Toolbar from './Toolbar';
 import useDrawStampImage from './useDrawStampImage';
@@ -47,6 +51,9 @@ export default function DrawingApp(): React$Node {
 		{stamps: []}
 	);
 
+	const playColorChangeSound = useColorChangeSound();
+	const playStampSound = useStampSound();
+
 	// Mouse movement for stamp preview
 	// We don't want this for touch though
 	const onMouseMove = useCallback(
@@ -69,7 +76,7 @@ export default function DrawingApp(): React$Node {
 	);
 
 	// Color change
-	const onWheel = useCallback(
+	const onWheelCallback = useCallback(
 		(ev: SyntheticWheelEvent<HTMLDivElement>) => {
 			let newColor = '';
 			for (let i = 1; i <= 6; i += 1) {
@@ -77,9 +84,13 @@ export default function DrawingApp(): React$Node {
 			}
 
 			setStampColor('#' + newColor);
+
+			playColorChangeSound();
 		},
-		[setStampColor]
+		[playColorChangeSound]
 	);
+
+	const onWheelThrottle = useThrottleCallback(onWheelCallback, 30, true);
 
 	// Canvas resize
 	function onWindowResize() {
@@ -126,6 +137,8 @@ export default function DrawingApp(): React$Node {
 		});
 
 		setMouseMoveCoordinates(null);
+
+		playStampSound();
 	}
 
 	return (
@@ -133,7 +146,7 @@ export default function DrawingApp(): React$Node {
 			className="fullscreen absolute"
 			onMouseMove={onMouseMove}
 			onMouseLeave={onMouseLeave}
-			onWheel={onWheel}
+			onWheel={drawingActive ? onWheelThrottle : null}
 		>
 			<Toolbar
 				canRedo={canRedo}

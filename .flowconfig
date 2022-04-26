@@ -22,6 +22,7 @@ untyped-type-import=error
 [options]
 emoji=true
 exact_by_default=true
+module.name_mapper.extension='mp3' -> '<PROJECT_ROOT>/src/util/mp3-stub.js'
 react.runtime=automatic
 
 [strict]
