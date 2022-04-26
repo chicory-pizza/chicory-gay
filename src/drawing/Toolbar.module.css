@@ -16,6 +16,7 @@
 
 .toolbarInactive {
 	opacity: 0;
+	visibility: hidden;
 }
 
 .toolbar label {

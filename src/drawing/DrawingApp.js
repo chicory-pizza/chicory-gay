@@ -105,7 +105,15 @@ export default function DrawingApp(): React$Node {
 		const x = parseInt(ev.clientX - rect.left, 10);
 		const y = parseInt(ev.clientY - rect.top, 10);
 
-		setDrawingActive(true);
+		let newStampSize = stampSize;
+		if (!drawingActive) {
+			// Original image is 1280x1280
+			// Auto-set the stamp size on first use
+			newStampSize = Math.round((windowHeight / 1280) * 10);
+			setStampSize(newStampSize);
+
+			setDrawingActive(true);
+		}
 
 		dispatch({
 			type: 'newStamp',
@@ -113,7 +121,7 @@ export default function DrawingApp(): React$Node {
 				centerOffsetX: x - windowWidth / 2,
 				centerOffsetY: y - windowHeight / 2,
 				color: stampColor,
-				size: stampSize,
+				size: newStampSize,
 			},
 		});
 
