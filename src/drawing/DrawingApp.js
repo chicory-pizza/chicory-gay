@@ -83,11 +83,16 @@ export default function DrawingApp(): React$Node {
 				newColor += (~~(Math.random() * 16)).toString(16);
 			}
 
+			// Update mouse move coordinates as well
+			if (ev.currentTarget) {
+				onMouseMove(ev);
+			}
+
 			setStampColor('#' + newColor);
 
 			playColorChangeSound();
 		},
-		[playColorChangeSound]
+		[onMouseMove, playColorChangeSound]
 	);
 
 	const onWheelThrottle = useThrottleCallback(onWheelCallback, 30, true);
