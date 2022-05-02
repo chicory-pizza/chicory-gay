@@ -45,6 +45,7 @@ export default function Toolbar(props: Props): React$Node {
 			<label className={styles.space}>
 				Color:&nbsp;
 				<input
+					className={styles.color}
 					type="color"
 					onChange={(ev: SyntheticInputEvent<HTMLInputElement>) => {
 						props.onColorChange(ev.currentTarget.value);
