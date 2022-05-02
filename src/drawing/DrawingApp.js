@@ -4,6 +4,7 @@
 import {useThrottleCallback} from '@react-hook/throttle';
 import {useCallback, useEffect, useState} from 'react';
 
+import ErrorBoundary from '../ErrorBoundary';
 import useUndoRedoReducer from '../util/useUndoRedoReducer';
 import type {UndoReducerAction} from '../util/useUndoRedoReducer';
 
@@ -153,16 +154,18 @@ export default function DrawingApp(): React$Node {
 			onMouseLeave={onMouseLeave}
 			onWheel={drawingActive ? onWheelThrottle : null}
 		>
-			<Toolbar
-				canRedo={canRedo}
-				canUndo={canUndo}
-				dispatch={dispatch}
-				color={stampColor}
-				onColorChange={setStampColor}
-				onSizeChange={setStampSize}
-				showControls={drawingActive}
-				size={stampSize}
-			/>
+			<ErrorBoundary>
+				<Toolbar
+					canRedo={canRedo}
+					canUndo={canUndo}
+					dispatch={dispatch}
+					color={stampColor}
+					onColorChange={setStampColor}
+					onSizeChange={setStampSize}
+					showControls={drawingActive}
+					size={stampSize}
+				/>
+			</ErrorBoundary>
 
 			<SavedStampCanvas
 				dpr={dpr}

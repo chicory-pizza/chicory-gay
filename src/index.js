@@ -5,6 +5,7 @@ import {createRoot} from 'react-dom/client';
 
 import DrawingApp from './drawing/DrawingApp';
 import './index.css';
+import ErrorBoundary from './ErrorBoundary';
 import {paintdogConsoleText} from './util/paintdogConsoleText';
 
 // Start
@@ -18,6 +19,8 @@ if (container == null) {
 const root = createRoot(container);
 root.render(
 	<StrictMode>
-		<DrawingApp />
+		<ErrorBoundary>
+			<DrawingApp />
+		</ErrorBoundary>
 	</StrictMode>
 );
