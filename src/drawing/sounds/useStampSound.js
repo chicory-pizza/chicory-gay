@@ -20,7 +20,7 @@ function shuffleArray(array: Array<string>): Array<string> {
 }
 
 export default function useStampSound(): () => void {
-	const [sequence, setSequence] = useState(
+	const [sequence, setSequence] = useState(() =>
 		shuffleArray([...ORIGINAL_SEQUENCE])
 	);
 
