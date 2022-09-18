@@ -24,6 +24,8 @@ body {
 	/* disable drag-to-refresh on mobile */
 	overscroll-behavior: none; /* Chrome */
 	touch-action: none; /* Safari */
+
+	accent-color: rgb(182, 154, 255);
 }
 
 body,
