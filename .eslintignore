@@ -1,4 +1,5 @@
-flow-typed/
+dist/
 
-build/
 coverage/
+
+flow-typed/

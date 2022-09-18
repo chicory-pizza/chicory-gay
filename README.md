@@ -16,9 +16,14 @@ Steps:
 2. npm install
 3. npm start
 
-This should open the web app at http://localhost:3000
+This should open the web app at http://localhost:5173
 
-This project was bootstrapped with [Create React App](https://create-react-app.dev/docs/getting-started/).
+### Extra notes
+
+This project used to be bootstrapped with [Create React App](https://create-react-app.dev/docs/getting-started/) but it's now migrated to [Vite](https://vitejs.dev), because of this, there are a few quirks that is normally not seen on other Vite projects:
+
+- [Jest](https://jestjs.io) is used instead of [Vitest](https://vitest.dev) as [canvas in jsdom](https://github.com/vitest-dev/vitest/issues/740) doesn't work on Vitest
+- `babel.config.js` is only used by Jest
 
 ## License
 

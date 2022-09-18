@@ -1,6 +1,6 @@
 [ignore]
-<PROJECT_ROOT>/build/.*
 <PROJECT_ROOT>/coverage/.*
+<PROJECT_ROOT>/dist/.*
 <PROJECT_ROOT>/node_modules/resolve/test/resolver/malformed_package_json/package.json
 
 [include]
@@ -22,6 +22,10 @@ untyped-type-import=error
 [options]
 emoji=true
 exact_by_default=true
+experimental.enforce_local_inference_annotations=true
+experimental.enforce_this_annotations=true
+experimental.enforce_class_annotations=true
+inference_mode=constrain_writes
 module.name_mapper.extension='mp3' -> '<PROJECT_ROOT>/src/util/mp3-stub.js'
 react.runtime=automatic
 

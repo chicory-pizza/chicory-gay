@@ -9,6 +9,10 @@
 		"plugin:jsx-a11y/recommended"
 	],
 	"rules": {
+		"no-constant-binary-expression": "error",
+		"no-var": "error",
+		"prefer-const": "warn",
+
 		// Prettier already handles this
 		"no-mixed-spaces-and-tabs": "off",
 
@@ -29,5 +33,10 @@
 				}
 			}
 		]
-	}
+	},
+	"overrides": [
+		{
+			"files": ["*.js", "*.jsx"]
+		}
+	]
 }
