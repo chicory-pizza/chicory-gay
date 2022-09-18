@@ -31,4 +31,4 @@ The web app is licensed under the [MPL 2.0 License](https://www.mozilla.org/en-U
 
 Original image by [kez](https://azurehaiku.tumblr.com/post/681788441393037312/i-want-what-they-have).
 
-Brush stamp by [moonberrytea](https://moonberrytea.tumblr.com).
+Brush stamp by [moon--and--star](https://moon--and--star.tumblr.com).
