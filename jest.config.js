@@ -12,4 +12,5 @@ module.exports = {
 		'\\.mp3$': '<rootDir>/src/testUtil/fileTransform.js',
 		'\\.png$': '<rootDir>/src/testUtil/fileTransform.js',
 	},
+	transformIgnorePatterns: [],
 };
