@@ -32,3 +32,5 @@ The web app is licensed under the [MPL 2.0 License](https://www.mozilla.org/en-U
 Original image by [kez](https://azurehaiku.tumblr.com/post/681788441393037312/i-want-what-they-have).
 
 Brush stamp by [moon--and--star](https://moon--and--star.tumblr.com).
+
+Domigorgon Plus font by [Legendknight 3000](https://www.youtube.com/@Legendknight3000).
